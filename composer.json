@@ -1,0 +1,39 @@
+{
+	"name" : "swydmuch/naughts-and-crosses",
+	"description" : "This is implementation of Naughts and crosses (Tic-tac-toe) game in PHP",
+	"type" : "project",
+	"license" : "MIT",
+	"keywords": [
+		"Naughts and crosses",
+		"Tic-tac-toe",
+		"Clean Architecture",
+		"TDD",
+		"artificial intelligence"
+	],
+	"authors" : [{
+			"name" : "@swydmuch"
+		}
+	],
+	"autoload" : {
+		"psr-4" : {
+			"NAC\\" : "src/"
+		}
+	},
+	"autoload-dev" : {
+		"psr-4" : {
+			"NAC\\Tests\\" : "tests/"
+		}
+	},
+	"require": {
+		"php": "7.2.*"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "7.*",
+		"phpmd/phpmd" : "@stable",
+		"squizlabs/php_codesniffer": "3.*"	,
+		"infection/infection": "^0.11.2"
+	},
+	"scripts": {
+	 "runAllTests": "phpunit --bootstrap vendor/autoload.php tests"
+	}
+}
