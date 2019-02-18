@@ -16,6 +16,9 @@ class Board implements BoardInterface
     const RIGHT_BOTTOM_DIRECTION = 'RIGHT_BOTTOM';
     const RIGHT_TOP_DIRECTION = 'RIGHT_TOP';
 
+    const CROSS_PLAYER = 1;
+    const NAUGHT_PLAYER = 2;
+
     private $size;
     /** @var FieldInterface[]  */
     private $fields;
@@ -23,8 +26,9 @@ class Board implements BoardInterface
     private $winningLineFields;
     private $isVictory;
     private $isDraw;
+    private $nextPlayer;
 
-    public function __construct(int $size, int $winingLineSize)
+    public function __construct(int $size, int $winingLineSize, int $startingPlayer)
     {
         if ($size < 3) {
             throw new TooSmallBoardSizeException();
@@ -34,12 +38,17 @@ class Board implements BoardInterface
             throw new LineSizeBiggerThanBoardException();
         }
 
+        if ($startingPlayer <> self::CROSS_PLAYER && $startingPlayer <> self::NAUGHT_PLAYER) {
+            throw new WrongPlayerException();
+        }
+
         $this->size = $size;
         $this->fields = [];
         $this->winingLineSize = $winingLineSize;
         $this->winningLineFields = [];
         $this->isVictory = false;
         $this->isDraw = false;
+        $this->nextPlayer = $startingPlayer;
     }
 
     public function putField(FieldInterface $field): void
@@ -81,6 +90,29 @@ class Board implements BoardInterface
         return $this->fields[$coordinateX][$coordinateY];
     }
 
+    public function getNotTakenPositions(): array
+    {
+        $notTakenPositions = [];
+        for ($coordinateX = 0; $coordinateX < $this->size; $coordinateX++) {
+            for ($coordinateY = 0; $coordinateY < $this->size; $coordinateY++) {
+                if (!$this->isTakenPosition($coordinateX, $coordinateY)) {
+                    $notTakenPositions[] = [$coordinateX, $coordinateY];
+                }
+            }
+        }
+        return $notTakenPositions;
+    }
+
+    public function isCrossMove(): bool
+    {
+        return $this->nextPlayer === self::CROSS_PLAYER;
+    }
+
+    public function isNaughtMove(): bool
+    {
+        return $this->nextPlayer === self::NAUGHT_PLAYER;
+    }
+
     private function addFieldToCollection(FieldInterface $field)
     {
         $this->fields[$field->getCoordinateX()][$field->getCoordinateY()] = $field;
@@ -116,19 +148,6 @@ class Board implements BoardInterface
     private function evaluateDraw()
     {
         $this->isDraw = ($this->isVictory === false && count($this->getNotTakenPositions()) === 0);
-    }
-
-    private function getNotTakenPositions(): array
-    {
-        $notTakenPositions = [];
-        for ($coordinateX = 0; $coordinateX < $this->size; $coordinateX++) {
-            for ($coordinateY = 0; $coordinateY < $this->size; $coordinateY++) {
-                if (!$this->isTakenPosition($coordinateX, $coordinateY)) {
-                    $notTakenPositions[] = [$coordinateX, $coordinateY];
-                }
-            }
-        }
-        return $notTakenPositions;
     }
 
     private function getTopNeighbours(FieldInterface $field) : array

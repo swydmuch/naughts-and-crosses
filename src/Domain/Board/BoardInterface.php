@@ -15,4 +15,10 @@ interface BoardInterface
     public function isVictory(): bool;
 
     public function isDraw(): bool;
+
+    public function getNotTakenPositions(): array;
+
+    public function isCrossMove(): bool;
+
+    public function isNaughtMove(): bool;
 }

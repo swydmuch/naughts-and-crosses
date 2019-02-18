@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace NAC\Tests\Domain;
 
 use NAC\Domain\Board\Board;
+use NAC\Domain\Board\Player;
 use NAC\Domain\Field\Cross;
 use NAC\Domain\Field\Naught;
 use PHPUnit\Framework\TestCase;
@@ -16,7 +17,7 @@ class DrawTest extends TestCase
     {
         $size = 3;
         $lineSize = 3;
-        $board = new Board($size, $lineSize);
+        $board = new Board($size, $lineSize, Board::CROSS_PLAYER);
         foreach ($fields as $eachField) {
             $board->putField($eachField);
         }
@@ -32,7 +33,7 @@ class DrawTest extends TestCase
     {
         $size = 3;
         $lineSize = 3;
-        $board = new Board($size, $lineSize);
+        $board = new Board($size, $lineSize, Board::CROSS_PLAYER);
         foreach ($fields as $eachFields) {
             $board->putField($eachFields);
         }
