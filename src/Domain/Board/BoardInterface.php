@@ -20,8 +20,6 @@ interface BoardInterface
 
     public function isDraw(): bool;
 
-    public function getNotTakenPositions(): array; //TODO to replace by getEmptyPositions
-
     public function getEmptyPositions(): PositionCollection;
 
     public function isCrossMove(): bool;

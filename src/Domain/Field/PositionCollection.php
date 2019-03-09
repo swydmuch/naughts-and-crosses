@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace NAC\Domain\Field;
 
-class PositionCollection implements \Iterator
+class PositionCollection implements \Iterator, \Countable
 {
     private $storage;
 
@@ -49,5 +49,10 @@ class PositionCollection implements \Iterator
     public function valid(): bool
     {
         return $this->storage->valid();
+    }
+
+    public function count(): int
+    {
+        return $this->storage->count();
     }
 }

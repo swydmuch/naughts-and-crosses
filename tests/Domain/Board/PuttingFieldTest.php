@@ -8,6 +8,7 @@ use NAC\Domain\Field\InvalidCoordinateException;
 use NAC\Domain\Board\AlreadyTakenPositionException;
 use NAC\Domain\Board\LineSizeBiggerThanBoardException;
 use NAC\Domain\Board\TooSmallBoardSizeException;
+use NAC\Domain\Field\Position;
 use PHPUnit\Framework\TestCase;
 use NAC\Domain\Board\Board;
 
@@ -20,10 +21,10 @@ class PuttingFieldTest extends TestCase
     {
         $this->expectException(InvalidCoordinateException::class);
 
-        $field = new Cross($coordinateX, $coordinateY);
+        $position = new Position($coordinateX, $coordinateY);
         $board = new Board($boardSize, $boardSize, Board::CROSS_PLAYER);
 
-        $board->putField($field);
+        $board->take($position);
     }
 
     /**
@@ -69,14 +70,12 @@ class PuttingFieldTest extends TestCase
      */
     public function testProperFieldCoordinate(int $coordinateX, int $coordinateY, int $boardSize): void
     {
-        $field = new Cross($coordinateX, $coordinateY);
+        $position = new Position($coordinateX, $coordinateY);
         $board = new Board($boardSize, $boardSize, Board::CROSS_PLAYER);
 
-        $board->putField($field);
-        $fieldFromBoard = $board->getFieldByXY($coordinateX, $coordinateY);
+        $board->take($position);
 
         $this->assertTrue($board->isTakenPosition($coordinateX, $coordinateY));
-        $this->assertSame($field, $fieldFromBoard);
     }
 
     /**
@@ -91,6 +90,7 @@ class PuttingFieldTest extends TestCase
         ];
     }
 
+    //TODO test to delete, after changing putField to private
     public function testAlreadyPuttedField(): void
     {
         $this->expectException(AlreadyTakenPositionException::class);

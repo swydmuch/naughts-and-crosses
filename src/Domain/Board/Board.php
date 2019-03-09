@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace NAC\Domain\Board;
 
+use NAC\Domain\Field\Cross;
 use NAC\Domain\Field\FieldInterface;
 use NAC\Domain\Field\InvalidCoordinateException;
 use NAC\Domain\Field\Naught;
@@ -65,6 +66,7 @@ class Board implements BoardInterface
         $this->putField($field);
     }
 
+    //TODO change usage to take() and visibility to private
     public function putField(FieldInterface $field): void
     {
         $this->throwExceptionIfFieldPositionNotValid($field);
@@ -102,19 +104,6 @@ class Board implements BoardInterface
         $this->throwExceptionIfCoordinateNotValid($coordinateX);
         $this->throwExceptionIfCoordinateNotValid($coordinateY);
         return $this->fields[$coordinateX][$coordinateY];
-    }
-
-    public function getNotTakenPositions(): array
-    {
-        $notTakenPositions = [];
-        for ($coordinateX = 0; $coordinateX < $this->size; $coordinateX++) {
-            for ($coordinateY = 0; $coordinateY < $this->size; $coordinateY++) {
-                if (!$this->isTakenPosition($coordinateX, $coordinateY)) {
-                    $notTakenPositions[] = [$coordinateX, $coordinateY];
-                }
-            }
-        }
-        return $notTakenPositions;
     }
 
     public function getEmptyPositions(): PositionCollection
@@ -174,7 +163,7 @@ class Board implements BoardInterface
 
     private function evaluateDraw()
     {
-        $this->isDraw = ($this->isVictory === false && count($this->getNotTakenPositions()) === 0);
+        $this->isDraw = ($this->isVictory === false && count($this->getEmptyPositions()) === 0);
     }
 
     private function getTopNeighbours(FieldInterface $field) : array
