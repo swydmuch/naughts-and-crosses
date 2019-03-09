@@ -4,6 +4,9 @@ namespace NAC\Domain\Board;
 
 use NAC\Domain\Field\FieldInterface;
 use NAC\Domain\Field\InvalidCoordinateException;
+use NAC\Domain\Field\Naught;
+use NAC\Domain\Field\Position;
+use NAC\Domain\Field\PositionCollection;
 
 class Board implements BoardInterface
 {
@@ -49,6 +52,17 @@ class Board implements BoardInterface
         $this->isVictory = false;
         $this->isDraw = false;
         $this->nextPlayer = $startingPlayer;
+    }
+
+    public function take(Position $position): void
+    {
+        if ($this->isCrossMove()) {
+            $field = new Cross($position->getCoordinateX(), $position->getCoordinateY());
+        } else {
+            $field = new Naught($position->getCoordinateX(), $position->getCoordinateY());
+        }
+
+        $this->putField($field);
     }
 
     public function putField(FieldInterface $field): void
@@ -101,6 +115,19 @@ class Board implements BoardInterface
             }
         }
         return $notTakenPositions;
+    }
+
+    public function getEmptyPositions(): PositionCollection
+    {
+        $emptyPositions = new PositionCollection();
+        for ($coordinateX = 0; $coordinateX < $this->size; $coordinateX++) {
+            for ($coordinateY = 0; $coordinateY < $this->size; $coordinateY++) {
+                if (!$this->isTakenPosition($coordinateX, $coordinateY)) {
+                    $emptyPositions->attach(new Position($coordinateX, $coordinateY));
+                }
+            }
+        }
+        return $emptyPositions;
     }
 
     public function isCrossMove(): bool

@@ -132,6 +132,4 @@ class PuttingFieldTest extends TestCase
         $wrongPlayer = 3;
         new Board(3, 3, $wrongPlayer);
     }
-
-    //TODO: verification whether movements take place alternately
 }
