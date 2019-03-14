@@ -22,7 +22,7 @@ class PuttingFieldTest extends TestCase
         $this->expectException(InvalidCoordinateException::class);
 
         $position = new Position($coordinateX, $coordinateY);
-        $board = new Board($boardSize, $boardSize, Board::CROSS_PLAYER);
+        $board = new Board($boardSize, $boardSize, Board::CROSS_PLAYER, '0123456789012');
 
         $board->take($position);
     }
@@ -34,7 +34,7 @@ class PuttingFieldTest extends TestCase
     {
         $this->expectException(InvalidCoordinateException::class);
 
-        $board = new Board($boardSize, $boardSize, Board::CROSS_PLAYER);
+        $board = new Board($boardSize, $boardSize, Board::CROSS_PLAYER, '0123456789012');
 
         $board->isTakenPosition($coordinateX, $coordinateY);
     }
@@ -46,7 +46,7 @@ class PuttingFieldTest extends TestCase
     {
         $this->expectException(InvalidCoordinateException::class);
 
-        $board = new Board($boardSize, $boardSize, Board::CROSS_PLAYER);
+        $board = new Board($boardSize, $boardSize, Board::CROSS_PLAYER, '0123456789012');
 
         $board->getFieldByXY($coordinateX, $coordinateY);
     }
@@ -71,7 +71,7 @@ class PuttingFieldTest extends TestCase
     public function testProperFieldCoordinate(int $coordinateX, int $coordinateY, int $boardSize): void
     {
         $position = new Position($coordinateX, $coordinateY);
-        $board = new Board($boardSize, $boardSize, Board::CROSS_PLAYER);
+        $board = new Board($boardSize, $boardSize, Board::CROSS_PLAYER, '0123456789012');
 
         $board->take($position);
 
@@ -90,13 +90,12 @@ class PuttingFieldTest extends TestCase
         ];
     }
 
-    //TODO test to delete, after changing putField to private
     public function testAlreadyPuttedField(): void
     {
         $this->expectException(AlreadyTakenPositionException::class);
 
         $field = new Cross(0, 0);
-        $board = new Board(3, 3, Board::CROSS_PLAYER);
+        $board = new Board(3, 3, Board::CROSS_PLAYER, '0123456789012');
         $board->putField($field);
 
         $board->putField($field);
@@ -105,24 +104,24 @@ class PuttingFieldTest extends TestCase
     public function testTooSmallBoardSize(): void
     {
         $this->expectException(TooSmallBoardSizeException::class);
-        new Board(2, 2, Board::CROSS_PLAYER);
+        new Board(2, 2, Board::CROSS_PLAYER, '0123456789012');
     }
 
     public function testLineSizeBiggerThanBoardSize(): void
     {
         $this->expectException(LineSizeBiggerThanBoardException::class);
-        new Board(3, 4, Board::CROSS_PLAYER);
+        new Board(3, 4, Board::CROSS_PLAYER, '0123456789012');
     }
 
     public function testCheckingNextPlayerCross(): void
     {
-        $board = new Board(3, 3, Board::CROSS_PLAYER);
+        $board = new Board(3, 3, Board::CROSS_PLAYER, '0123456789012');
         $this->assertTrue($board->isCrossMove());
     }
 
     public function testCheckingNextPlayerNaught(): void
     {
-        $board = new Board(3, 3, Board::NAUGHT_PLAYER);
+        $board = new Board(3, 3, Board::NAUGHT_PLAYER, '0123456789012');
         $this->assertTrue($board->isNaughtMove());
     }
 
@@ -130,6 +129,6 @@ class PuttingFieldTest extends TestCase
     {
         $this->expectException(WrongPlayerException::class);
         $wrongPlayer = 3;
-        new Board(3, 3, $wrongPlayer);
+        new Board(3, 3, $wrongPlayer, '0123456789012');
     }
 }

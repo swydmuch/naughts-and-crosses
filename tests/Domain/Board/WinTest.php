@@ -19,7 +19,7 @@ class WinTest extends TestCase
         parent::setUp();
         $boardSize = 3;
         $lineSize = $boardSize;
-        $this->board = new Board($boardSize, $lineSize, Board::NAUGHT_PLAYER);
+        $this->board = new Board($boardSize, $lineSize, Board::NAUGHT_PLAYER, '0123456789012');
     }
 
     public function testNotWinningOnEmptyBoard()

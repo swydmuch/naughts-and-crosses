@@ -17,7 +17,7 @@ class DrawTest extends TestCase
     {
         $size = 3;
         $lineSize = 3;
-        $board = new Board($size, $lineSize, Board::CROSS_PLAYER);
+        $board = new Board($size, $lineSize, Board::CROSS_PLAYER, '0123456789012');
         foreach ($fields as $eachField) {
             $board->putField($eachField);
         }
@@ -33,7 +33,7 @@ class DrawTest extends TestCase
     {
         $size = 3;
         $lineSize = 3;
-        $board = new Board($size, $lineSize, Board::CROSS_PLAYER);
+        $board = new Board($size, $lineSize, Board::CROSS_PLAYER, '0123456789012');
         foreach ($fields as $eachFields) {
             $board->putField($eachFields);
         }

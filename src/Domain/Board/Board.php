@@ -31,8 +31,9 @@ class Board implements BoardInterface
     private $isVictory;
     private $isDraw;
     private $nextPlayer;
+    private $identifier;
 
-    public function __construct(int $size, int $winingLineSize, int $startingPlayer)
+    public function __construct(int $size, int $winingLineSize, int $startingPlayer, string $identifier)
     {
         if ($size < 3) {
             throw new TooSmallBoardSizeException();
@@ -46,6 +47,11 @@ class Board implements BoardInterface
             throw new WrongPlayerException();
         }
 
+        if (strlen($identifier) != 13) {
+            throw new WrongIdentifierException();
+        }
+
+
         $this->size = $size;
         $this->fields = [];
         $this->winingLineSize = $winingLineSize;
@@ -53,7 +59,15 @@ class Board implements BoardInterface
         $this->isVictory = false;
         $this->isDraw = false;
         $this->nextPlayer = $startingPlayer;
+        $this->identifier = $identifier;
     }
+
+    public function getIdentifier(): string
+    {
+        return $this->identifier;
+    }
+
+
 
     public function take(Position $position): void
     {
@@ -66,7 +80,6 @@ class Board implements BoardInterface
         $this->putField($field);
     }
 
-    //TODO change usage to take() and visibility to private
     public function putField(FieldInterface $field): void
     {
         $this->throwExceptionIfFieldPositionNotValid($field);
