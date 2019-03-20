@@ -1,0 +1,6 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+create_game:
+  path: /game
+  controller: NAC\Infrastructure\Controllers\CreateGame::execute
