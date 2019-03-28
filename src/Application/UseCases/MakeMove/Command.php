@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace NAC\Application\UseCase\MakeMove;
+namespace NAC\Application\UseCases\MakeMove;
 
 class Command
 {

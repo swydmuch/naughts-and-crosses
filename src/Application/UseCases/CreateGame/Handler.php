@@ -1,18 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace NAC\Application\UseCase\CreateGame;
+namespace NAC\Application\UseCases\CreateGame;
 
-use NAC\Application\PersistenceManagerInterface;
+use NAC\Application\Persistence\Board\EntityManagerInterface;
 use NAC\Domain\Board\Board;
 
 class Handler
 {
-    private $persistenceManager;
+    private $entityManager;
 
-    public function __construct(PersistenceManagerInterface $persistenceManager)
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->persistenceManager = $persistenceManager;
+        $this->entityManager = $entityManager;
     }
 
     public function handle(Command $command)
@@ -23,6 +23,7 @@ class Handler
             $command->getStartingPlayer(),
             $command->getBoardId()
         );
-        $this->persistenceManager->persist($board);
+        $this->entityManager->persist($board);
+        $this->entityManager->flush();
     }
 }

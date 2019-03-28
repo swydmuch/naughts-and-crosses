@@ -1,0 +1,17 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="NAC\Domain\Board\Board" table="board">
+        <id name="identifier" type="string" length="13"/>
+        <field name="size" type="integer"/>
+        <field name="fields" type="array" />
+        <field name="winingLineSize" type="integer"/>
+        <field name="winningLineFields" type="integer"/>
+        <field name="isVictory" type="boolean"/>
+        <field name="isDraw" type="boolean"/>
+        <field name="nextPlayer" type="integer"/>
+    </entity>
+
+</doctrine-mapping>

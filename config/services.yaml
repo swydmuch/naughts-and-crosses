@@ -5,7 +5,11 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
-    kernel.secret: KERNEL_SECRET
+    kernel.secret: '%env(KERNEL_SECRET)%'
+    database.driver: '%env(DATABASE_DRIVER)%'
+    sqlite.database.path: '%kernel.project_dir%%env(SQLITE_DATABASE_PATH)%'
+
+
 
 
 services:
@@ -29,3 +33,23 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+##############################################################################
+
+    Doctrine\ORM\EntityManager:
+        public: true
+        factory: 'NAC\Infrastructure\Doctrine\EntityManagerFactory:create'
+        arguments:
+            $driver: '%database.driver%'
+            $pathToDb: '%sqlite.database.path%'
+    Doctrine\DBAL\Connection:
+        class: 'Doctrine\DBAL\Connection'
+        factory: 'Doctrine\ORM\EntityManager:getConnection'
+    Doctrine\Common\EventManager:
+        factory: 'Doctrine\DBAL\Connection:getEventManager'
+
+
+
+
+
+

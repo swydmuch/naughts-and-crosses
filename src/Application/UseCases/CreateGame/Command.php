@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace NAC\Application\UseCase\CreateGame;
+namespace NAC\Application\UseCases\CreateGame;
 
 class Command
 {
