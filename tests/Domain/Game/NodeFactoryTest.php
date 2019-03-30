@@ -27,6 +27,40 @@ class NodeFactoryTest extends TestCase
         $this->assertEquals($position, $node->getPosition());
     }
 
+    public function testStopBuildingTreeAfterTerminalNode()
+    {
+        $firstPosition = new Position(0, 1);
+        $secondPosition = new Position(1, 0);
+        $emptyPositions = new PositionCollection();
+        $emptyPositions->attach($firstPosition);
+        $emptyPositions->attach($secondPosition);
+
+        $board = $this->createMock(BoardInterface::class);
+        $board->method('isVictory')->willReturn(true);
+        $factory = new AINodeFactory($board, $emptyPositions);
+        $rootChildren = $factory->create();
+
+        $rootChildren->rewind();
+        $firstInternalNode = $rootChildren->current();
+        $rootChildren->next();
+        $secondInternalNode = $rootChildren->current();
+
+        $firstInternalNodeChildren = $firstInternalNode->getChildren();
+        $firstInternalNodeChildren->rewind();
+
+        $secondInternalNodeChildren = $secondInternalNode->getChildren();
+        $secondInternalNodeChildren->rewind();
+
+        $this->assertEquals($firstPosition, $firstInternalNode->getPosition());
+        $this->assertEquals($secondPosition, $secondInternalNode->getPosition());
+        $this->assertFalse($firstInternalNodeChildren->valid());
+        $this->assertFalse($secondInternalNodeChildren->valid());
+        $this->assertContainsOnlyInstancesOf(
+            AINode::class,
+            [$firstInternalNode, $secondInternalNode]
+        );
+    }
+
     public function testCreatingTreeFromTwoPositions()
     {
         $firstPosition = new Position(0, 1);

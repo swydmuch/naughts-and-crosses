@@ -24,6 +24,36 @@ composer runAllTests
 ## Dependencies
 PHP7
 
+## Run application as a built-in web server
+php -S 127.0.0.1:8000 -t public
+
+## API
+### Start game [POST]
+http://127.0.0.1:8000/game
+
+with body:
+``
+{
+	"boardSize" : 3,
+	"lineSize": 3,
+	"startingPlayer": 1
+}
+``
+### Make move [PATCH]
+http://127.0.0.1:8000/game/{id}/makeMove
+with body:
+``
+{
+	"x" : 0,
+	"y" : 0
+}
+``
+### Get game status [GET]
+http://127.0.0.1:8000/game/{id}/status
+
+### Make move by AI [PATCH]
+http://127.0.0.1:8000/game/{id}/AIMove
+
 ## License
 This project is licensed under the MIT License - see the LICENSE.md file for details
 

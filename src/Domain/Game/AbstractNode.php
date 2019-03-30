@@ -11,6 +11,7 @@ abstract class AbstractNode
     protected $children;
     private $position;
     private $value;
+    private $isTerminal;
     const VALUE_FOR_DRAW = 0;
     
     public function __construct(Position $position, BoardInterface $copyOfBoard)
@@ -22,10 +23,13 @@ abstract class AbstractNode
         $isDraw = $copyOfBoard->isDraw();
         if ($isVictory) {
             $this->value = static::VALUE_FOR_VICTORY;
+            $this->isTerminal = true;
         } elseif ($isDraw) {
             $this->value = self::VALUE_FOR_DRAW;
+            $this->isTerminal = true;
         } else {
             $this->value = null;
+            $this->isTerminal = false;
         }
     }
     
@@ -94,6 +98,11 @@ abstract class AbstractNode
             $bestChild = $this->getBestChild();
             $this->value = $bestChild->getValue();
         }
+    }
+
+    public function isTerminal(): bool
+    {
+        return $this->isTerminal;
     }
         
     abstract protected function getBestChild(): AbstractNode;

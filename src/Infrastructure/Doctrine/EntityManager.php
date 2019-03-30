@@ -5,6 +5,7 @@ namespace NAC\Infrastructure\Doctrine;
 
 use NAC\Application\Persistence\Board\EntityManagerInterface;
 use Doctrine\ORM\EntityManager as doctrineEntityManger;
+use NAC\Domain\Board\Board;
 use NAC\Domain\Board\BoardInterface;
 
 class EntityManager implements EntityManagerInterface
@@ -26,7 +27,9 @@ class EntityManager implements EntityManagerInterface
         $this->doctrineEntityManager->flush();
     }
 
-
-
+    public function getRepository()
+    {
+        return $this->doctrineEntityManager->getRepository(Board::class);
+    }
 
 }

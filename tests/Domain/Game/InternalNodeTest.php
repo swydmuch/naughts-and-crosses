@@ -21,6 +21,8 @@ class InternalNodeTest extends TestCase
         $internalNode->getValue();
     }
 
+
+
     public function testAddingNode()
     {
         $upperPosition = new Position(0, 0);
@@ -32,6 +34,7 @@ class InternalNodeTest extends TestCase
         $expectedNodes = new NodeCollection();
         $expectedNodes->attach($leafNode);
         $this->assertEquals($expectedNodes, $upperNode->getChildren());
+        $this->assertFalse($upperNode->isTerminal());
     }
     
     public function testEvaluatingBestOpponentMove()

@@ -73,8 +73,10 @@ class Board implements BoardInterface
     {
         if ($this->isCrossMove()) {
             $field = new Cross($position->getCoordinateX(), $position->getCoordinateY());
+            $this->nextPlayer = self::NAUGHT_PLAYER;
         } else {
             $field = new Naught($position->getCoordinateX(), $position->getCoordinateY());
+            $this->nextPlayer = self::CROSS_PLAYER;
         }
 
         $this->putField($field);

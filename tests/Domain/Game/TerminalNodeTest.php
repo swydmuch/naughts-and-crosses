@@ -35,6 +35,7 @@ class TerminalNodeTest extends TestCase
         $node = new AINode($this->position, $this->board);
         $expectedValue = AINode::VALUE_FOR_VICTORY;
         $this->assertSame($expectedValue, $node->getValue());
+        $this->assertTrue($node->isTerminal());
     }
     
     public function testDrawOnTerminalAINode()
@@ -44,6 +45,7 @@ class TerminalNodeTest extends TestCase
         $node = new AINode($this->position, $this->board);
         $expectedValue = AINode::VALUE_FOR_DRAW;
         $this->assertSame($expectedValue, $node->getValue());
+        $this->assertTrue($node->isTerminal());
     }
     
     public function testWinOnTerminalOpponentNode()
@@ -53,6 +55,7 @@ class TerminalNodeTest extends TestCase
         $node = new OpponentNode($this->position, $this->board);
         $expectedValue = OpponentNode::VALUE_FOR_VICTORY;
         $this->assertSame($expectedValue, $node->getValue());
+        $this->assertTrue($node->isTerminal());
     }
     
     public function testDrawOnTerminalOpponentNode()
@@ -62,6 +65,7 @@ class TerminalNodeTest extends TestCase
         $node = new OpponentNode($this->position, $this->board);
         $expectedValue = OpponentNode::VALUE_FOR_DRAW;
         $this->assertSame($expectedValue, $node->getValue());
+        $this->assertTrue($node->isTerminal());
     }
 }
 

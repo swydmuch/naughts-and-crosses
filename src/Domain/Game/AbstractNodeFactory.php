@@ -26,10 +26,12 @@ abstract class AbstractNodeFactory
             $copyOfEmptyPositions = clone $this->emptyPositions;
             $node = $this->createNode($eachPosition, $copyOfBoard);
             $copyOfEmptyPositions->detach($eachPosition);
-            $factory = $this->createChildrenFactory($copyOfBoard, $copyOfEmptyPositions);
-            $children = $factory->create();
-            foreach ($children as $child) {
-                $node->addChild($child);
+            if (!$node->isTerminal()) {
+                $factory = $this->createChildrenFactory($copyOfBoard, $copyOfEmptyPositions);
+                $children = $factory->create();
+                foreach ($children as $child) {
+                    $node->addChild($child);
+                }
             }
 
             $nodeCollection->attach($node);

@@ -7,6 +7,12 @@ class GameStatus
     const STATUS_VICTORY = 3;
     const STATUS_DRAW = 2;
     const STATUS_CONTINUES = 1;
+    const NAMES = [
+        self::STATUS_VICTORY => 'victory',
+        self::STATUS_DRAW => 'draw',
+        self::STATUS_CONTINUES => 'continues'
+    ];
+
     private $status;
 
     public function __construct(int $status)
@@ -17,4 +23,10 @@ class GameStatus
 
         $this->status = $status;
     }
+
+    public function getNameOfStatus(): string
+    {
+        return self::NAMES[$this->status];
+    }
+
 }

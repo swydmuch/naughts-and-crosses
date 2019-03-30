@@ -4,3 +4,15 @@
 create_game:
   path: /game
   controller: NAC\Infrastructure\Controllers\CreateGame::execute
+
+make_move:
+  path: /game/{boardId}/makeMove
+  controller: NAC\Infrastructure\Controllers\MakeMove::execute
+get_status:
+  path: /game/{boardId}/status
+  controller: NAC\Infrastructure\Controllers\GameStatus::execute
+ai_move:
+  path: /game/{boardId}/AIMove
+  controller: NAC\Infrastructure\Controllers\AIMove::execute
+
+

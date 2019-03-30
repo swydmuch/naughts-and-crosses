@@ -2,18 +2,18 @@
 declare(strict_types=1);
 namespace NAC\Application\UseCases\GetGameStatus;
 
-use NAC\Application\BoardRepository;
+use NAC\Application\Persistence\Board\RepositoryInterface;
 
 class Handler
 {
     private $boardRepository;
 
-    public function __construct(BoardRepository $boardRepository)
+    public function __construct(RepositoryInterface $boardRepository)
     {
         $this->boardRepository = $boardRepository;
     }
 
-    public function handle(Query $query)
+    public function handle(Query $query): GameStatus
     {
         $board = $this->boardRepository->getById($query->getBoardId());
         if ($board->isVictory()) {

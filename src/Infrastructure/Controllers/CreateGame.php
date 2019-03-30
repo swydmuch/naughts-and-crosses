@@ -22,9 +22,10 @@ class CreateGame extends AbstractController
 
     public function execute(Request $request): Response
     {
-        $boardSize = (int) $request->query->get('board_size');
-        $lineSize = (int) $request->query->get('line_size');
-        $startingPlayer = (int) $request->query->get('starting_player');
+        $requestContent = json_decode($request->getContent());
+        $boardSize = $requestContent->boardSize;
+        $lineSize = $requestContent->lineSize;
+        $startingPlayer = $requestContent->startingPlayer;
         $id = IdGenerator::generate();
 
         $command = new Command($boardSize, $lineSize, $startingPlayer, $id);
