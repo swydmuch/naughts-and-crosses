@@ -24,6 +24,9 @@ composer runAllTests
 ## Dependencies
 PHP7
 
+## Create database (default in .env is set sqlite)
+php vendor/bin/doctrine  orm:schema-tool:create
+
 ## Run application as a built-in web server
 php -S 127.0.0.1:8000 -t public
 
