@@ -2,6 +2,8 @@
 /vendor/
 /.settings/
 /logs/*
-/var/
+/var/*
 .project
 .buildpath
+
+!/var/.gitkeep
