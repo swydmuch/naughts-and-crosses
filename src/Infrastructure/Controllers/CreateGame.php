@@ -8,6 +8,7 @@ use NAC\Application\UseCases\CreateGame\Handler;
 use NAC\Infrastructure\Doctrine\EntityManager;
 use NAC\Infrastructure\IdGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,22 +23,15 @@ class CreateGame extends AbstractController
 
     public function execute(Request $request): Response
     {
-        $requestContent = json_decode($request->getContent());
-        $boardSize = $requestContent->boardSize;
-        $lineSize = $requestContent->lineSize;
-        $startingPlayer = $requestContent->startingPlayer;
-        $id = IdGenerator::generate();
+        $boardSize = (int) $request->request->get('boardSize');
+        $lineSize = (int) $request->request->get('lineSize');
+        $startingPlayer =  (int) $request->request->get('startingPlayer');
 
+        $id = IdGenerator::generate();
         $command = new Command($boardSize, $lineSize, $startingPlayer, $id);
         $handler = new Handler($this->entityManager);
         $handler->handle($command);
 
-        $response = new Response();
-        $response->setStatusCode(201);
-        $response->setContent(json_encode([
-            'id' => $id,
-        ]));
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+        return new JsonResponse(['id' => $id], 201);
     }
 }

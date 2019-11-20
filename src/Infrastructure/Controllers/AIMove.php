@@ -8,6 +8,7 @@ use NAC\Application\UseCases\AIMove\Handler;
 use NAC\Infrastructure\Doctrine\EntityManager;
 use NAC\Infrastructure\Doctrine\Repository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class AIMove extends AbstractController
@@ -28,13 +29,9 @@ class AIMove extends AbstractController
         $handler = new Handler($this->boardRepository, $this->entityManager, $responseData);
         $handler->handle($command);
 
-        $response = new Response();
-        $response->setStatusCode(200);
-        $response->setContent(json_encode([
+        return new JsonResponse([
             'x' => $responseData->x,
-            'y' => $responseData->y,
-        ]));
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+            'y' => $responseData->y
+        ]);
     }
 }

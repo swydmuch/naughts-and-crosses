@@ -24,16 +24,13 @@ class MakeMove extends AbstractController
 
     public function execute(Request $request, string $boardId): Response
     {
-        $requestContent = json_decode($request->getContent());
-        $coordinateX = $requestContent->x;
-        $coordinateY = $requestContent->y;
+        $coordinateX = (int) $request->request->get('x');
+        $coordinateY = (int) $request->request->get('y');
 
         $command = new Command($coordinateX, $coordinateY, $boardId);
         $handler = new Handler($this->boardRepository, $this->entityManager);
         $handler->handle($command);
 
-        $response = new Response();
-        $response->setStatusCode(200);
-        return $response;
+        return new Response('OK');
     }
 }

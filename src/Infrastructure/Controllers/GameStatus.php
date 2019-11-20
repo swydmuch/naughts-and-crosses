@@ -7,6 +7,7 @@ use NAC\Application\UseCases\GetGameStatus\Query;
 use NAC\Application\UseCases\GetGameStatus\Handler;
 use NAC\Infrastructure\Doctrine\Repository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class GameStatus extends AbstractController
@@ -24,12 +25,6 @@ class GameStatus extends AbstractController
         $handler = new Handler($this->boardRepository);
         $gameStatus = $handler->handle($query);
 
-        $response = new Response();
-        $response->setStatusCode(200);
-        $response->setContent(json_encode([
-            'status' => $gameStatus->getNameOfStatus()
-        ]));
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+        return new JsonResponse(['status' => $gameStatus->getNameOfStatus()]);
     }
 }

@@ -2,17 +2,20 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 create_game:
-  path: /game
+  path: /games
   controller: NAC\Infrastructure\Controllers\CreateGame::execute
-
-make_move:
-  path: /game/{boardId}/makeMove
-  controller: NAC\Infrastructure\Controllers\MakeMove::execute
+  methods: POST
 get_status:
-  path: /game/{boardId}/status
+  path: /games/{boardId}
   controller: NAC\Infrastructure\Controllers\GameStatus::execute
+  methods: GET
+make_move:
+  path: /games/{boardId}/humanMoves
+  controller: NAC\Infrastructure\Controllers\MakeMove::execute
+  methods: POST
 ai_move:
-  path: /game/{boardId}/AIMove
+  path: /games/{boardId}/AIMoves
   controller: NAC\Infrastructure\Controllers\AIMove::execute
+  methods: POST
 
 
