@@ -37,17 +37,17 @@ class WinTest extends TestCase
             $this->board->putField($eachField);
         }
 
-        $expectedWinningFields = array_reverse($fields);
+        $sameArray = $this->sameArray($fields, $this->board->getWinningFields());
+
 
         $this->assertTrue($this->board->isVictory());
         $this->assertFalse($this->board->isDraw());
-        $this->assertSame($expectedWinningFields, $this->board->getWinningFields());
+        $this->assertTrue($sameArray);
     }
 
     public function threeFieldsInLineProvider()
     {
         return [
-
             'vertical line up' => [
                 [
                     new Naught(0, 2),
@@ -60,6 +60,14 @@ class WinTest extends TestCase
                     new Naught(0, 0),
                     new Naught(0, 1),
                     new Naught(0, 2)
+                ]
+            ],
+            'vertical line center' => [
+                [
+                    new Naught(0, 0),
+                    new Naught(0, 2),
+                    new Naught(0, 1)
+
                 ]
             ],
             'horizontal line right' => [
@@ -76,6 +84,13 @@ class WinTest extends TestCase
                     new Naught(2, 0)
                 ]
             ],
+            'horizontal line center' => [
+                [
+                    new Naught(0, 0),
+                    new Naught(2, 0),
+                    new Naught(1, 0)
+                ]
+            ],
             'diagonal left bottom' => [
                 [
                     new Naught(0, 0),
@@ -90,6 +105,13 @@ class WinTest extends TestCase
                     new Naught(0, 0)
                 ]
             ],
+            'diagonal ascending center' => [
+                [
+                    new Naught(2, 2),
+                    new Naught(0, 0),
+                    new Naught(1, 1)
+                ]
+            ],
             'diagonal left top' => [
                 [
                     new Naught(0, 2),
@@ -102,6 +124,14 @@ class WinTest extends TestCase
                     new Naught(2, 0),
                     new Naught(1, 1),
                     new Naught(0, 2)
+                ]
+            ],
+            'diagonal descending center' => [
+                [
+                    new Naught(2, 0),
+                    new Naught(0, 2),
+                    new Naught(1, 1)
+
                 ]
             ]
         ];
@@ -268,6 +298,24 @@ class WinTest extends TestCase
         $faultFieldY = 0;
         $faultField = new Naught($faultFieldX, $faultFieldY);
         $this->board->putField($faultField);
+    }
+
+    //TODO add Line class with method same()
+    public function sameArray($firstArray, $secondArray)
+    {
+        foreach ($firstArray as $eachValue) {
+            if (!in_array($eachValue, $secondArray)) {
+                return false;
+            }
+        }
+
+        foreach ($secondArray as $eachValue) {
+            if (!in_array($eachValue, $firstArray)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 

@@ -152,14 +152,10 @@ class Board implements BoardInterface
     private function evaluateVictory(FieldInterface $field)
     {
         $neighbours = [
-            $this->getTopNeighbours($field),
-            $this->getBottomNeighbours($field),
-            $this->getLeftNeighbours($field),
-            $this->getRightNeighbours($field),
-            $this->getLeftBottomNeighbours($field),
-            $this->getLeftTopNeighbours($field),
-            $this->getRightTopNeighbours($field),
-            $this->getRightBottomNeighbours($field)
+            $this->getHorizontalNeighbours($field),
+            $this->getVerticalNeighbours($field),
+            $this->getDiagonalAscendingNeighbours($field),
+            $this->getDiagonalDescendingNeighbours($field)
         ];
 
         foreach ($neighbours as $eachDirectionNeighbours) {
@@ -174,6 +170,58 @@ class Board implements BoardInterface
                 $this->winningLineFields = $winningFields;
             }
         }
+    }
+
+    private function getHorizontalNeighbours(FieldInterface $field)
+    {
+        $result = [];
+        foreach ($this->getLeftNeighbours($field) as $neighbour) {
+            $result[] = $neighbour;
+        }
+
+        foreach ($this->getRightNeighbours($field) as $neighbour) {
+            $result[] = $neighbour;
+        }
+        return $result;
+    }
+
+    private function getVerticalNeighbours(FieldInterface $field)
+    {
+        $result = [];
+        foreach ($this->getTopNeighbours($field) as $neighbour) {
+            $result[] = $neighbour;
+        }
+
+        foreach ($this->getBottomNeighbours($field) as $neighbour) {
+            $result[] = $neighbour;
+        }
+        return $result;
+    }
+
+    private function getDiagonalAscendingNeighbours(FieldInterface $field)
+    {
+        $result = [];
+        foreach ($this->getRightTopNeighbours($field) as $neighbour) {
+            $result[] = $neighbour;
+        }
+
+        foreach ($this->getLeftBottomNeighbours($field) as $neighbour) {
+            $result[] = $neighbour;
+        }
+        return $result;
+    }
+
+    private function getDiagonalDescendingNeighbours(FieldInterface $field)
+    {
+        $result = [];
+        foreach ($this->getLeftTopNeighbours($field) as $neighbour) {
+            $result[] = $neighbour;
+        }
+
+        foreach ($this->getRightBottomNeighbours($field) as $neighbour) {
+            $result[] = $neighbour;
+        }
+        return $result;
     }
 
     private function evaluateDraw()
