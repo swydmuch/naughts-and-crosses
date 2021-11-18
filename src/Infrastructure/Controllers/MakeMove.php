@@ -8,6 +8,7 @@ use NAC\Application\UseCases\MakeMove\Handler;
 use NAC\Infrastructure\Doctrine\EntityManager;
 use NAC\Infrastructure\Doctrine\Repository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -31,6 +32,6 @@ class MakeMove extends AbstractController
         $handler = new Handler($this->boardRepository, $this->entityManager);
         $handler->handle($command);
 
-        return new Response('OK');
+        return new JsonResponse(['info' => 'OK'], 200);
     }
 }

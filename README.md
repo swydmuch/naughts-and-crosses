@@ -41,7 +41,7 @@ lineSize:3
 startingPlayer:1
 ``
 ### Make move [POST]
-http://127.0.0.1:8000/games/{id}/moves
+http://127.0.0.1:8000/games/{id}/humanMoves
 with:
 ``
 x:0
@@ -50,8 +50,14 @@ y:0
 ### Get game status [GET]
 http://127.0.0.1:8000/games/{id}
 
+For winning arrangement
+``
+{'status' : victory}
+``
+other possible status: draw, continues 
+
 ### Make move by AI [POST]
-http://127.0.0.1:8000/games/{id}/AIMove
+http://127.0.0.1:8000/games/{id}/AIMoves
 
 ## License
 This project is licensed under the MIT License - see the LICENSE.md file for details
